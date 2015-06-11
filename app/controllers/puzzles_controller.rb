@@ -12,6 +12,11 @@ class PuzzlesController < ApplicationController
     respond_with @puzzle
   end
 
+  def answer
+    @puzzle = PuzzleSolution.attempt params[:puzzle_id], params[:answer_id]
+    respond_with @puzzle
+  end
+
 private
 
   def puzzle_params
