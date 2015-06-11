@@ -16,8 +16,4 @@ RSpec.describe 'GET /puzzles/[id]' do
     expect(parsed_response['population']).to eq 'foo' => 'bar'
   end
 
-  def parsed_response
-    @parsed_response ||= JSON.parse response.body
-  end
-
 end
