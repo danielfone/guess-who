@@ -13,7 +13,12 @@ class PuzzlesController < ApplicationController
   end
 
   def answer
-    @puzzle = PuzzleSolution.attempt params[:puzzle_id], params[:answer_id]
+    @puzzle = PuzzleSolution.attempt params.slice(:puzzle_id, :answer_id)
+    respond_with @puzzle
+  end
+
+  def query
+    @puzzle = PuzzleSolution.query puzzle_id: params[:puzzle_id], query_attrs: request.query_parameters
     respond_with @puzzle
   end
 

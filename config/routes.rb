@@ -6,5 +6,6 @@ Rails.application.routes.draw do
     end
 
     get "answer/:answer_id" => 'puzzles#answer'
+    get "answer" => 'puzzles#query'
   end
 end
