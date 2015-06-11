@@ -7,6 +7,11 @@ class PuzzlesController < ApplicationController
     respond_with @puzzle
   end
 
+  def show
+    @puzzle = Puzzle.find params[:id]
+    respond_with @puzzle
+  end
+
 private
 
   def puzzle_params
