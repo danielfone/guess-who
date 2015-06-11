@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20150611111358) do
     t.integer "difficulty"
     t.string  "team"
     t.json    "population"
-    t.string  "answer_id"
+    t.json    "answer"
     t.integer "guesses",    default: 0,     null: false
     t.boolean "solved",     default: false, null: false
   end

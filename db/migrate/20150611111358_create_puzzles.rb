@@ -6,7 +6,7 @@ class CreatePuzzles < ActiveRecord::Migration
       t.integer :difficulty
       t.string :team
       t.json :population
-      t.string :answer_id
+      t.json :answer
       t.integer :guesses, null: false, default: 0
       t.boolean :solved, null: false, default: false
     end

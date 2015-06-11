@@ -5,12 +5,9 @@ RSpec.describe 'GET /puzzles/[id]/answer/[params]' do
   let!(:puzzle) do
     create :puzzle, {
       team: 'blue',
-      answer_id: '123',
-      population: {
-        '123' => {
-          hair: 'black',
-          eyes: 'blue',
-        }
+      answer: {
+        hair: 'black',
+        eyes: 'blue',
       }
     }
   end

@@ -7,15 +7,13 @@ class PuzzleSolution
   def self.attempt(*args); new(*args).attempt; end
 
   def attempt
-    record_guess
-    raise_wrong! unless puzzle.answer_id == answer_id
+    raise_wrong! unless check_answer['id'] == answer_id
     puzzle.update_column :solved, true
     puzzle
   end
 
   def query
-    record_guess
-    raise_wrong! unless query_attrs.any? { |k,v| answer[k] == v }
+    raise_wrong! unless query_attrs.any? { |k,v| check_answer[k] == v }
     puzzle
   end
 
@@ -25,12 +23,11 @@ private
     @puzzle ||= Puzzle.find puzzle_id
   end
 
-  def answer
-    @answer ||= puzzle.answer
-  end
-
-  def record_guess
-    Puzzle.increment_counter :guesses, puzzle_id
+  def check_answer
+    @answer ||= begin
+      Puzzle.increment_counter :guesses, puzzle_id
+      puzzle.answer
+    end
   end
 
   def raise_wrong!

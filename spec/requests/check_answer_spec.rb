@@ -5,7 +5,7 @@ RSpec.describe 'GET /puzzles/[id]/answer/[answer]' do
   let!(:puzzle) do
     create :puzzle, {
       team: 'blue',
-      answer_id: '123',
+      answer: {id: '123'},
     }
   end
 
