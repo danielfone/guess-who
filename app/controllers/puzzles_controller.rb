@@ -5,6 +5,8 @@ class PuzzlesController < ApplicationController
   def new
     @puzzle = PuzzleCreation.perform params[:team], params[:difficulty]
     respond_with @puzzle
+  rescue => e
+    render json: e.message, status: :not_found
   end
 
   def show

@@ -7,4 +7,11 @@ RSpec.describe 'GET /puzzles/[team]/new' do
     expect(parsed_response).to include "id", "difficulty", "population"
     expect(parsed_response['difficulty']).to eq 5
   end
+
+  context 'with bad params' do
+    it 'should 404' do
+      get "/puzzles/red-team/new?difficulty=afdsaf"
+      expect(response).to be_not_found
+    end
+  end
 end

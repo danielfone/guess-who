@@ -1,5 +1,5 @@
 class Population
-  BuildError = Class.new StandardError
+  SizeError = Class.new StandardError
 
   MAX_POPULATION = 5000
   ATTRIBUTES = {
@@ -11,12 +11,12 @@ class Population
     haircolour:  [:brown,    :pink,       :orange,   :blonde,        :green,    :black, :grey, :white],
   }
 
-  def self.build(*args); new(*args).build; end
-
   def initialize(size)
     @size = Integer(size)
     @current_id = 0
-    raise BuildError, "Population is too large. Max #{MAX_POPULATION}" if @size > MAX_POPULATION
+    raise_size_error if @size > MAX_POPULATION || @size < 1
+  rescue ArgumentError
+    raise_size_error
   end
 
   def build
@@ -34,6 +34,10 @@ private
     Population::ATTRIBUTES.each_with_object({}) do |(attr, options), hash|
       hash[attr] = options.sample
     end
+  end
+
+  def raise_size_error
+    raise SizeError, "Population must be between 1 and #{MAX_POPULATION}"
   end
 
 end

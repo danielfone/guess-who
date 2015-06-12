@@ -1,40 +1,27 @@
 class PuzzleCreation
-  include ActiveModel::Model
-
   DEFAULT_DIFFICULTY = 10
-
-  attr_reader :team, :difficulty
-
-  validates_presence_of :team
-  validates_numericality_of :difficulty
 
   def self.perform(*args); new(*args).perform; end
 
   def initialize(team, difficulty)
-    @team       = String(team)
-    @difficulty = Integer(difficulty || DEFAULT_DIFFICULTY)
+    @team       = String(team) or raise "Team is required"
+    @difficulty = difficulty || DEFAULT_DIFFICULTY
+    @population = Population.new @difficulty
   end
 
   def perform
-    return unless valid?
-
-    puzzle.save
-    puzzle
+    Puzzle.create! do |p|
+      p.team = @team
+      p.difficulty = @difficulty
+      p.population = generated_population
+      p.answer = generated_population.sample
+    end
   end
 
 private
 
-  def puzzle
-    @puzzle ||= Puzzle.new do |p|
-      p.team = team
-      p.difficulty = difficulty
-      p.population = generated_population.to_a
-      p.answer = generated_population.to_a.sample
-    end
-  end
-
   def generated_population
-    @generated_population ||= Population.build difficulty
+    @generated_population ||= @population.build.to_a
   end
 
 end
