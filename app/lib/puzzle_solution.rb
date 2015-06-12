@@ -1,11 +1,11 @@
 class PuzzleSolution < Struct.new(:puzzle_id)
 
   def guess(answer_id)
-    mark_solved if check_answer['id'] == answer_id
+    mark_solved if check_answer['id'] == Integer(answer_id)
   end
 
   def ask(attrs)
-    attrs.any? { |k,v| check_answer[k] == v }
+    attrs.any? { |k,v| check_answer.fetch(k) == v }
   end
 
 private
@@ -13,7 +13,7 @@ private
   def check_answer
     @check_answer ||= begin
       Puzzle.increment_counter :guesses, puzzle_id
-      Puzzle::ANSWERS_CACHE[puzzle_id] or {}
+      Puzzle::ANSWERS_CACHE[puzzle_id] or raise ActiveRecord::RecordNotFound
     end
   end
 

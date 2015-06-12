@@ -6,7 +6,7 @@ class PuzzlesController < ApplicationController
     @puzzle = PuzzleCreation.perform params[:team], params[:difficulty]
     respond_with @puzzle
   rescue => e
-    render json: e.message, status: :not_found
+    render json: e.message, status: :bad_request
   end
 
   def show
@@ -15,11 +15,15 @@ class PuzzlesController < ApplicationController
   end
 
   def answer
-    head guess_correct? ? :ok : :not_found
+    head guess_correct? ? :ok : :no_content
+  rescue ArgumentError
+    render text: "Invalid answer", status: :bad_request
   end
 
   def query
-    head matches? ? :ok : :not_found
+    head matches? ? :ok : :no_content
+  rescue KeyError => e
+    render text: "Invalid key: #{e.message}", status: :bad_request
   end
 
 private

@@ -12,7 +12,7 @@ RSpec.describe 'GET /puzzles/[team]/new' do
   context 'with bad params' do
     it 'should 404' do
       get "/puzzles/red-team/new?difficulty=afdsaf"
-      expect(response).to be_not_found
+      expect(response.status).to eq 400
     end
   end
 end

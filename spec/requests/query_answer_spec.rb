@@ -15,15 +15,23 @@ RSpec.describe 'GET /puzzles/[id]/answer/[params]' do
   context 'with correct params' do
     it 'should respond with 200' do
       get "/puzzles/#{puzzle.id}/answer?eyes=green&hair=black"
-      expect(response).to be_successful
+      expect(response.status).to eq 200
     end
   end
 
   context 'with incorrect params' do
-    it 'should 404' do
+    it 'should 204' do
       get "/puzzles/#{puzzle.id}/answer?eyes=green&hair=brown"
-      expect(response).to be_not_found
+      expect(response.status).to eq 204
     end
   end
+
+  context 'with invalid params' do
+    it 'should 400' do
+      get "/puzzles/#{puzzle.id}/answer?foo=bar"
+      expect(response.status).to eq 400
+    end
+  end
+
 
 end
