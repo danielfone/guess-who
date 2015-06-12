@@ -13,7 +13,7 @@ private
   def check_answer
     @check_answer ||= begin
       Puzzle.increment_counter :guesses, puzzle_id
-      Puzzle::ANSWERS_CACHE[puzzle_id] or raise_wrong!
+      Puzzle::ANSWERS_CACHE[puzzle_id] or {}
     end
   end
 

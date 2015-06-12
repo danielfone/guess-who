@@ -13,25 +13,25 @@ class PuzzlesController < ApplicationController
   end
 
   def answer
-    if solution.guess params[:answer_id]
-      head :ok
-    else
-      head :not_found
-    end
+    head guess_correct? ? :ok : :not_found
   end
 
   def query
-    if solution.ask request.query_parameters
-      head :ok
-    else
-      head :not_found
-    end
+    head matches? ? :ok : :not_found
   end
 
 private
 
   def solution
     @solution ||= PuzzleSolution.new params[:puzzle_id]
+  end
+
+  def guess_correct?
+    solution.guess params[:answer_id]
+  end
+
+  def matches?
+    solution.ask request.query_parameters
   end
 
 end
