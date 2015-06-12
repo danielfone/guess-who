@@ -1,18 +1,18 @@
 class PuzzleCreation
-  DEFAULT_DIFFICULTY = 10
+  DEFAULT_SIZE = 10
 
   def self.perform(*args); new(*args).perform; end
 
-  def initialize(team, difficulty)
+  def initialize(team, size)
     @team       = String(team) or raise "Team is required"
-    @difficulty = difficulty || DEFAULT_DIFFICULTY
-    @population = Population.new @difficulty
+    @size = size || DEFAULT_SIZE
+    @population = Population.new @size
   end
 
   def perform
     Puzzle.create! do |p|
       p.team = @team
-      p.difficulty = @difficulty
+      p.size = @size
       p.population = generated_population
       p.answer = generated_population.sample
     end

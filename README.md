@@ -7,7 +7,7 @@
 ## TODO:
 
   * [x] Validations on puzzle creation
-  * Scoreboard
+  * [x] Scoreboard
   * [x] Much faster lookups
   * [ ] Rounds
 
@@ -23,13 +23,12 @@ end
 
 ## Population
 
-* Size is dependent on difficulty
 * Attributes are heterogenous
 * Attributes get more fractured for a bigger pop
 
 ## API
 
-GET /puzzles/[teamname]/new?difficulty=[x]
+GET /puzzles/[teamname]/new?size=[x]
 => 302 /puzzles/[uuid]
 
 --
@@ -77,7 +76,7 @@ attr    x
 Puzzle:
 - uuid
 - round
-- difficulty
+- size
 - team
 - population
 - answer_id

@@ -3,7 +3,7 @@ class CreatePuzzles < ActiveRecord::Migration
     enable_extension 'uuid-ossp'
 
     create_table :puzzles, id: :uuid do |t|
-      t.integer :difficulty
+      t.integer :size
       t.string :team
       t.json :population
       t.json :answer

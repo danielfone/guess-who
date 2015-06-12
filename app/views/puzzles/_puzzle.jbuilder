@@ -1,1 +1,1 @@
-json.extract! @puzzle, :id, :difficulty, :population, :team
+json.extract! @puzzle, :id, :size, :population, :team

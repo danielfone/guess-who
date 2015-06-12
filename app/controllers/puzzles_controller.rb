@@ -3,7 +3,7 @@ class PuzzlesController < ApplicationController
   respond_to :json
 
   def new
-    @puzzle = PuzzleCreation.perform params[:team], params[:difficulty]
+    @puzzle = PuzzleCreation.perform params[:team], params[:size]
     respond_with @puzzle
   rescue => e
     render json: e.message, status: :bad_request
