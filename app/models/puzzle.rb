@@ -1,6 +1,4 @@
 class Puzzle < ActiveRecord::Base
-  ANSWERS_CACHE = {}
-  after_save :cache_answer
 
 private
 

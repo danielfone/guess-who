@@ -13,13 +13,18 @@ private
   def check_answer
     @check_answer ||= begin
       Puzzle.increment_counter :guesses, puzzle_id
-      Puzzle::ANSWERS_CACHE[puzzle_id] or raise ActiveRecord::RecordNotFound
+      cache.fetch ["answers", puzzle_id] do
+        Puzzle.find(puzzle_id).answer
+      end
     end
   end
 
   def mark_solved
     Puzzle.where(id: puzzle_id).update_all solved: true
-    Puzzle::ANSWERS_CACHE.delete puzzle_id
+  end
+
+  def cache
+    Rails.cache
   end
 
 end
