@@ -13,7 +13,7 @@ class PuzzlesController < ApplicationController
   end
 
   def answer
-    if PuzzleSolution.attempt params.slice(:puzzle_id, :answer_id)
+    if solution.guess params[:answer_id]
       head :ok
     else
       head :not_found
@@ -21,11 +21,17 @@ class PuzzlesController < ApplicationController
   end
 
   def query
-    if PuzzleSolution.query puzzle_id: params[:puzzle_id], query_attrs: request.query_parameters
+    if solution.ask request.query_parameters
       head :ok
     else
       head :not_found
     end
+  end
+
+private
+
+  def solution
+    @solution ||= PuzzleSolution.new params[:puzzle_id]
   end
 
 end

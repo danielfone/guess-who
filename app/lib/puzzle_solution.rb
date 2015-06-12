@@ -1,17 +1,11 @@
-class PuzzleSolution
-  include ActiveModel::Model
+class PuzzleSolution < Struct.new(:puzzle_id)
 
-  attr_accessor :puzzle_id, :answer_id, :query_attrs
-
-  def self.query(*args); new(*args).query; end
-  def self.attempt(*args); new(*args).attempt; end
-
-  def attempt
+  def guess(answer_id)
     mark_solved if check_answer['id'] == answer_id
   end
 
-  def query
-    query_attrs.any? { |k,v| check_answer[k] == v }
+  def ask(attrs)
+    attrs.any? { |k,v| check_answer[k] == v }
   end
 
 private
