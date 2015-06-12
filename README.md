@@ -6,9 +6,10 @@
 
 ## TODO:
 
-  * Validations on puzzle creation
+  * [x] Validations on puzzle creation
   * Scoreboard
-  * Much faster lookups
+  * [x] Much faster lookups
+  * [ ] Rounds
 
 ## Scoring
 
