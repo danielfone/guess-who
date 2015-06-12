@@ -1,9 +1,11 @@
 class Puzzle < ActiveRecord::Base
 
-private
-
-  def cache_answer
-    ANSWERS_CACHE[id] = answer
+  def score
+    if solved?
+      difficulty / guesses
+    else
+      -Math.log2(difficulty || 1)
+    end
   end
 
 end

@@ -8,4 +8,7 @@ Rails.application.routes.draw do
     get "answer/:answer_id" => 'puzzles#answer'
     get "answer" => 'puzzles#query'
   end
+
+  get 'scoreboard' => 'scoreboard#show'
+  root to: 'scoreboard#show'
 end
