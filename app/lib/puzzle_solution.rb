@@ -7,31 +7,25 @@ class PuzzleSolution
   def self.attempt(*args); new(*args).attempt; end
 
   def attempt
-    raise_wrong! unless check_answer['id'] == answer_id
-    puzzle.update_column :solved, true
-    puzzle
+    mark_solved if check_answer['id'] == answer_id
   end
 
   def query
-    raise_wrong! unless query_attrs.any? { |k,v| check_answer[k] == v }
-    puzzle
+    query_attrs.any? { |k,v| check_answer[k] == v }
   end
 
 private
 
-  def puzzle
-    @puzzle ||= Puzzle.find puzzle_id
-  end
-
   def check_answer
-    @answer ||= begin
+    @check_answer ||= begin
       Puzzle.increment_counter :guesses, puzzle_id
-      puzzle.answer
+      Puzzle::ANSWERS_CACHE[puzzle_id] or raise_wrong!
     end
   end
 
-  def raise_wrong!
-    raise ActiveRecord::RecordNotFound
+  def mark_solved
+    Puzzle.where(id: puzzle_id).update_all solved: true
+    Puzzle::ANSWERS_CACHE.delete puzzle_id
   end
 
 end

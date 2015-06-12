@@ -13,19 +13,19 @@ class PuzzlesController < ApplicationController
   end
 
   def answer
-    @puzzle = PuzzleSolution.attempt params.slice(:puzzle_id, :answer_id)
-    respond_with @puzzle
+    if PuzzleSolution.attempt params.slice(:puzzle_id, :answer_id)
+      head :ok
+    else
+      head :not_found
+    end
   end
 
   def query
-    @puzzle = PuzzleSolution.query puzzle_id: params[:puzzle_id], query_attrs: request.query_parameters
-    respond_with @puzzle
-  end
-
-private
-
-  def puzzle_params
-    params.slice(:team, :difficulty)
+    if PuzzleSolution.query puzzle_id: params[:puzzle_id], query_attrs: request.query_parameters
+      head :ok
+    else
+      head :not_found
+    end
   end
 
 end

@@ -4,6 +4,12 @@
 * Points accumulate during round
 * You can fetch and solve puzzles in parallel
 
+## TODO:
+
+  * Validations on puzzle creation
+  * Scoreboard
+  * Much faster lookups
+
 ## Scoring
 
 * Optimal will be binary search, so optimal guesses is n^1/2 (i.e. log2(n))

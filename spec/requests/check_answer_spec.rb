@@ -10,19 +10,16 @@ RSpec.describe 'GET /puzzles/[id]/answer/[answer]' do
   end
 
   context 'with correct answer' do
-    it 'should respond with correct JSON' do
+    it 'should respond with 200' do
       get "/puzzles/#{puzzle.id}/answer/123"
       expect(response).to be_successful
-      expect(parsed_response["solved"]).to eq true
-      expect(parsed_response["guesses"]).to eq 1
     end
   end
 
   context 'with incorrect answer' do
     it 'should 404' do
-      expect {
-        get "/puzzles/#{puzzle.id}/answer/xxx"
-      }.to raise_error ActiveRecord::RecordNotFound
+      get "/puzzles/#{puzzle.id}/answer/xxx"
+      expect(response).to be_not_found
     end
   end
 
