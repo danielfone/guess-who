@@ -2,8 +2,9 @@
 
   * Just like the board game, try to guess the correct "person" by asking yes or no questions.
   * You can fetch and solve boards in parallel
-  * Unsolved boards cost points
-  * Solved boards are scored according to how many questions/guesses they took
+  * Scoring:
+    * Unsolved boards cost points (`-log2(size)`)
+    * Solved boards are scored according to how many questions/guesses they took (`size / questions`)
 
 ## API
 
