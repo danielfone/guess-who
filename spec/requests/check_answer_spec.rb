@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'GET /puzzles/[id]/answer/[answer]' do
+RSpec.describe 'GET /puzzles/[id]/person/[answer]' do
 
   let!(:puzzle) do
     create :puzzle, {
@@ -9,23 +9,23 @@ RSpec.describe 'GET /puzzles/[id]/answer/[answer]' do
     }
   end
 
-  context 'with correct answer' do
+  context 'with correct person' do
     it 'should respond with 200' do
-      get "/puzzles/#{puzzle.id}/answer/123"
+      get "/puzzles/#{puzzle.id}/person/123"
       expect(response.status).to eq 200
     end
   end
 
-  context 'with incorrect answer' do
+  context 'with incorrect person' do
     it 'should 204' do
-      get "/puzzles/#{puzzle.id}/answer/1"
+      get "/puzzles/#{puzzle.id}/person/1"
       expect(response.status).to eq 204
     end
   end
 
-  context 'with invalid answer' do
+  context 'with invalid person' do
     it 'should 400' do
-      get "/puzzles/#{puzzle.id}/answer/xxx"
+      get "/puzzles/#{puzzle.id}/person/xxx"
       expect(response.status).to eq 400
     end
   end

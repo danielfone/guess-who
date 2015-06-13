@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'GET /puzzles/[id]/answer/[params]' do
+RSpec.describe 'GET /puzzles/[id]/person/[params]' do
 
   let!(:puzzle) do
     create :puzzle, {
@@ -14,21 +14,21 @@ RSpec.describe 'GET /puzzles/[id]/answer/[params]' do
 
   context 'with correct params' do
     it 'should respond with 200' do
-      get "/puzzles/#{puzzle.id}/answer?eyes=green&hair=black"
+      get "/puzzles/#{puzzle.id}/person?eyes=green&hair=black"
       expect(response.status).to eq 200
     end
   end
 
   context 'with incorrect params' do
     it 'should 204' do
-      get "/puzzles/#{puzzle.id}/answer?eyes=green&hair=brown"
+      get "/puzzles/#{puzzle.id}/person?eyes=green&hair=brown"
       expect(response.status).to eq 204
     end
   end
 
   context 'with invalid params' do
     it 'should 400' do
-      get "/puzzles/#{puzzle.id}/answer?foo=bar"
+      get "/puzzles/#{puzzle.id}/person?foo=bar"
       expect(response.status).to eq 400
     end
   end

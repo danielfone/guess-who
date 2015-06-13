@@ -5,8 +5,8 @@ Rails.application.routes.draw do
       get ":team/new" => 'puzzles#new'
     end
 
-    get "answer/:answer_id" => 'puzzles#answer'
-    get "answer" => 'puzzles#query'
+    get "person/:answer_id" => 'puzzles#answer'
+    get "person" => 'puzzles#query'
   end
 
   get 'scoreboard' => 'scoreboard#show'
