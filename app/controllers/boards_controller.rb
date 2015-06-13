@@ -1,17 +1,15 @@
 class BoardsController < ApplicationController
 
-  respond_to :json
-
   def new
     @board = BoardCreation.perform params[:team], params[:size]
-    respond_with @board
+    render json: board_json
   rescue Population::SizeError => e
     render json: e.message, status: :bad_request
   end
 
   def show
     @board = Board.find params[:id]
-    respond_with @board
+    render json: board_json
   end
 
   def answer
@@ -38,6 +36,10 @@ private
 
   def matches?
     solution.ask request.query_parameters
+  end
+
+  def board_json
+    @board.to_json(only: [:id, :size, :population, :team])
   end
 
 end
