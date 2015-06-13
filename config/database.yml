@@ -81,5 +81,3 @@ test:
 production:
   <<: *default
   database: guess-who_production
-  username: guess-who
-  password: <%= ENV['GUESS-WHO_DATABASE_PASSWORD'] %>
