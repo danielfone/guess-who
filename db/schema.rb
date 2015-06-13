@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20150611111358) do
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
 
-  create_table "puzzles", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+  create_table "boards", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.integer "size"
     t.string  "team"
     t.json    "population"

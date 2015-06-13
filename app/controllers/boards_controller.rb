@@ -1,17 +1,17 @@
-class PuzzlesController < ApplicationController
+class BoardsController < ApplicationController
 
   respond_to :json
 
   def new
-    @puzzle = PuzzleCreation.perform params[:team], params[:size]
-    respond_with @puzzle
-  rescue => e
+    @board = BoardCreation.perform params[:team], params[:size]
+    respond_with @board
+  rescue Population::SizeError => e
     render json: e.message, status: :bad_request
   end
 
   def show
-    @puzzle = Puzzle.find params[:id]
-    respond_with @puzzle
+    @board = Board.find params[:id]
+    respond_with @board
   end
 
   def answer
@@ -29,7 +29,7 @@ class PuzzlesController < ApplicationController
 private
 
   def solution
-    @solution ||= PuzzleSolution.new params[:puzzle_id]
+    @solution ||= BoardSolution.new params[:board_id]
   end
 
   def guess_correct?

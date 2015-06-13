@@ -1,8 +1,8 @@
-class CreatePuzzles < ActiveRecord::Migration
+class CreateBoards < ActiveRecord::Migration
   def change
     enable_extension 'uuid-ossp'
 
-    create_table :puzzles, id: :uuid do |t|
+    create_table :boards, id: :uuid do |t|
       t.integer :size
       t.string :team
       t.json :population

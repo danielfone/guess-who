@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
 
-  resources :puzzles, only: :show, defaults: { format: :json } do
+  resources :boards, only: :show, defaults: { format: :json } do
     collection do
-      get ":team/new" => 'puzzles#new'
+      get ":team/new" => 'boards#new'
     end
 
-    get "person/:answer_id" => 'puzzles#answer'
-    get "person" => 'puzzles#query'
+    get "person/:answer_id" => 'boards#answer'
+    get "person" => 'boards#query'
   end
 
   get 'scoreboard' => 'scoreboard#show'

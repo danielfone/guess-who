@@ -1,16 +1,16 @@
 ## Guess Who
 
   * Just like the board game, try to guess the correct "person" by asking yes or no questions.
-  * You can fetch and solve puzzles in parallel
-  * Unsolved puzzles cost points
-  * Solved puzzles are scored according to how many questions/guesses they took
+  * You can fetch and solve boards in parallel
+  * Unsolved boards cost points
+  * Solved boards are scored according to how many questions/guesses they took
 
 ## API
 
-Get a new puzzle for your team. `size` can be ommitted, the default is 24 people.
+Get a new board for your team. `size` can be ommitted, the default is 24 people.
 To keep things scalable people have `id`s instead of names.
 
-    GET /puzzles/[teamname]/new?size=3
+    GET /boards/[teamname]/new?size=3
     {
       "id": "867c3260-5257-4a8a-b550-be4f49d38a71",
       "size": 3,
@@ -50,26 +50,26 @@ To implement the query interface, we misuse some HTTP status codes.
 
 Ask about the selected person:
 
-    GET /puzzles/[puzzle_id]/person?hair=brown
+    GET /boards/[board_id]/person?hair=brown
     => 200 Yes, the person has brown hair
     => 204 No, the person does NOT have brown hair
 
 
 Ask if the person has *any* of the following attributes
 
-    GET /puzzles/[puzzle_id]/person?hair=brown&eyes=blue
+    GET /boards/[board_id]/person?hair=brown&eyes=blue
     => 200 The person has brown hair and/or blue eyes
     => 204 The person has neither brown hair nor blue eyes
 
 Guess the person:
 
-    GET /puzzles/[puzzle_id]/person/[answer_id]
+    GET /boards/[board_id]/person/[answer_id]
     => 204 Wrong, keep guessing
-    => 200 You Won! Grab another puzzle
+    => 200 You Won! Grab another board
 
 ## TODO:
 
-  * [x] Validations on puzzle creation
+  * [x] Validations on board creation
   * [x] Scoreboard
   * [x] Much faster lookups
   * [ ] Rounds

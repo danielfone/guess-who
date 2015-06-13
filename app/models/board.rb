@@ -1,4 +1,4 @@
-class Puzzle < ActiveRecord::Base
+class Board < ActiveRecord::Base
 
   def score
     if solved?

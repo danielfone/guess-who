@@ -1,4 +1,4 @@
-class PuzzleCreation
+class BoardCreation
   DEFAULT_SIZE = 24
 
   def self.perform(*args); new(*args).perform; end
@@ -10,7 +10,7 @@ class PuzzleCreation
   end
 
   def perform
-    Puzzle.create! do |p|
+    Board.create! do |p|
       p.team = @team
       p.size = @size
       p.population = generated_population

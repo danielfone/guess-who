@@ -1,4 +1,4 @@
-class PuzzleSolution < Struct.new(:puzzle_id)
+class BoardSolution < Struct.new(:board_id)
 
   def guess(answer_id)
     mark_solved if check_answer['id'] == Integer(answer_id)
@@ -12,15 +12,15 @@ private
 
   def check_answer
     @check_answer ||= begin
-      Puzzle.increment_counter :guesses, puzzle_id
-      cache.fetch ["answers", puzzle_id] do
-        Puzzle.find(puzzle_id).answer
+      Board.increment_counter :guesses, board_id
+      cache.fetch ["answers", board_id] do
+        Board.find(board_id).answer
       end
     end
   end
 
   def mark_solved
-    Puzzle.where(id: puzzle_id).update_all solved: true
+    Board.where(id: board_id).update_all solved: true
   end
 
   def cache
