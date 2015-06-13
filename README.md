@@ -1,8 +1,71 @@
 ## Guess Who
 
-* Rounds last 30 mins
-* Points accumulate during round
-* You can fetch and solve puzzles in parallel
+  * Just like the board game, try to guess the correct "person" by asking yes or no questions.
+  * You can fetch and solve puzzles in parallel
+  * Unsolved puzzles cost points
+  * Solved puzzles are scored according to how many questions/guesses they took
+
+## API
+
+Get a new puzzle for your team. `size` can be ommitted, the default is 24 people.
+To keep things scalable people have `id`s instead of names.
+
+    GET /puzzles/[teamname]/new?size=3
+    {
+      "id": "867c3260-5257-4a8a-b550-be4f49d38a71",
+      "size": 3,
+      "population": [
+        {
+          "sex": "xy",
+          "eyes": "brown",
+          "glasses": "sunglasses",
+          "hairstyle": "bald",
+          "face": "goatee",
+          "haircolour": "pink",
+          "id": 59
+        },
+        {
+          "sex": "xy",
+          "eyes": "brown",
+          "glasses": "sunglasses",
+          "hairstyle": "dynamite",
+          "face": "goatee",
+          "haircolour": "orange",
+          "id": 60
+        },
+        {
+          "sex": "xy",
+          "eyes": "brown",
+          "glasses": "sunglasses",
+          "hairstyle": "ringlets",
+          "face": "goatee",
+          "haircolour": "blonde",
+          "id": 83
+        }
+      ],
+      "team": "green-team"
+    }
+
+To implement the query interface, we misuse some HTTP status codes.
+
+Ask about the selected person:
+
+    GET /puzzles/[puzzle_id]/person?hair=brown
+    => 200 Yes, the person has brown hair
+    => 204 No, the person does NOT have brown hair
+
+
+Ask if the person has *any* of the following attributes
+
+    GET /puzzles/[puzzle_id]/person?hair=brown&eyes=blue
+    => 200 The person has brown hair and/or blue eyes
+    => 204 The person has neither brown hair nor blue eyes
+
+Guess the person:
+
+    GET /puzzles/[puzzle_id]/person/[answer_id]
+    => 204 Wrong, keep guessing
+    => 200 You Won! Grab another puzzle
 
 ## TODO:
 
@@ -10,77 +73,3 @@
   * [x] Scoreboard
   * [x] Much faster lookups
   * [ ] Rounds
-
-## Scoring
-
-* Optimal will be binary search, so optimal guesses is n^1/2 (i.e. log2(n))
-* e.g. pop=100 : best=1  ; worst=100 ; optimal=6.64
-* Score = if solved?
-    population - guesses
-else
-     -log2(population)
-end
-
-## Population
-
-* Attributes are heterogenous
-* Attributes get more fractured for a bigger pop
-
-## API
-
-GET /puzzles/[teamname]/new?size=[x]
-=> 302 /puzzles/[uuid]
-
---
-
-GET /puzzles/[uuid]
-{
-    uuid: [uuid],
-    population: {
-        1: {hair: brown, eyes: blue, ...},
-        2: {hair: brown, eyes: brown, ...},
-        3: {...},
-        ...,
-    }
-}
-
---
-
-GET /puzzles/[uuid]/answer/[id]
-=> 404 Wrong, keep guessing
-=> 200 You Won!
-
---
-
-GET /puzzles/[uuid]/answer?hair=brown
-GET /puzzles/[uuid]/answer?hair=brown&eyes=blue
-GET /puzzles/[uuid]/answer?query=any&hair=brown&..
-=> 200/404
-
---
-
-GET /scoreboard
-
-Round   1       2
-team1 score     x
-team2 score     x
-
-Queries
-        val
-attr    x
-
---
-
-## Schema
-
-Puzzle:
-- uuid
-- round
-- size
-- team
-- population
-- answer_id
-- guesses
-- solved
-
-For queries, keep puzzle (and answer) in identity map
