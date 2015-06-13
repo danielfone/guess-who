@@ -14,7 +14,8 @@ private
     @check_answer ||= begin
       Board.increment_counter :guesses, board_id
       cache.fetch ["answers", board_id] do
-        Board.find(board_id).answer
+        # Don't load potentially huge `population` field
+        Board.select(:answer).find(board_id).answer
       end
     end
   end
