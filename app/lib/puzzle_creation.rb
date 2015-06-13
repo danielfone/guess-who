@@ -1,5 +1,5 @@
 class PuzzleCreation
-  DEFAULT_SIZE = 10
+  DEFAULT_SIZE = 24
 
   def self.perform(*args); new(*args).perform; end
 
