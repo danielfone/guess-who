@@ -1,7 +1,8 @@
 class BoardsController < ApplicationController
 
   def new
-    @board = BoardCreation.perform params[:team], params[:size]
+    @board = board_creation.perform
+    @board.population = @board_creation.generated_population
     render json: board_json
   rescue Population::SizeError => e
     render json: e.message, status: :bad_request
@@ -40,6 +41,10 @@ private
 
   def board_json
     @board.to_json(only: [:id, :size, :population, :team])
+  end
+
+  def board_creation
+    @board_creation ||= BoardCreation.new params[:team], params[:size]
   end
 
 end

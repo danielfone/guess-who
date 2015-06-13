@@ -33,8 +33,12 @@ def run_board(logger)
   size = SIZES.sample
   b = time("new-#{size}") { HTTParty.get "http://local.host:3000/boards/#{TEAMNAMES.sample}/new?size=#{SIZES.sample}", logger: logger }
   id = b['id']
+  query_board id, size, logger
+  id
+end
 
-  5.times do
+def query_board(id, size, logger)
+    5.times do
     {
       answer: "/boards/#{id}/person/#{rand(size)}",
       query: "/boards/#{id}/person?#{random_query}",
@@ -43,6 +47,7 @@ def run_board(logger)
       time("#{type}") { HTTParty.get "http://local.host:3000/#{path}", logger: logger }
     end
   end
+
 end
 
 CONCURRENCY = Integer(ENV['CONCURRENCY'] || 1)

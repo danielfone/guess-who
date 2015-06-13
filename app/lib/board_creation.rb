@@ -13,12 +13,9 @@ class BoardCreation
     Board.create! do |p|
       p.team = @team
       p.size = @size
-      p.population = generated_population
       p.answer = generated_population.sample
     end
   end
-
-private
 
   def generated_population
     @generated_population ||= @population.build.to_a
