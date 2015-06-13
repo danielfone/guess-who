@@ -5,13 +5,6 @@ gem 'pg'
 gem 'jbuilder', '~> 2.0'
 gem 'responders', '~> 2.0'
 
-
-# Assets
-gem 'jquery-rails'
-gem 'sass-rails', '~> 5.0'
-gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.1.0'
-
 group :development do
   gem 'spring'
   gem 'spring-commands-rspec'
