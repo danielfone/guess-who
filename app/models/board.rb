@@ -1,11 +1,7 @@
 class Board < ActiveRecord::Base
 
   def score
-    if solved?
-      size / guesses
-    else
-      -Math.log2(size || 1)
-    end
+    solved? ? size / guesses : 0
   end
 
 end

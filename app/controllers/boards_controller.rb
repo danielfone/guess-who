@@ -1,8 +1,7 @@
 class BoardsController < ApplicationController
 
   def new
-    @board = board_creation.perform
-    @board.population = @board_creation.generated_population
+    @board = current_board || new_board
     render json: board_json
   rescue Population::SizeError => e
     render json: e.message, status: :bad_request
@@ -25,6 +24,12 @@ class BoardsController < ApplicationController
     render text: "Invalid key: #{e.message}", status: :bad_request
   end
 
+  def destroy
+    @board = Board.find params[:id]
+    @board.destroy
+    head :ok
+  end
+
 private
 
   def solution
@@ -45,6 +50,20 @@ private
 
   def board_creation
     @board_creation ||= BoardCreation.new params[:team], params[:size]
+  end
+
+  def new_or_current
+    current_board
+  end
+
+  def new_board
+    board_creation.perform.tap do |board|
+      board.population = board_creation.generated_population
+    end
+  end
+
+  def current_board
+    Board.where(team: params[:team], solved: false).first
   end
 
 end

@@ -1,15 +1,14 @@
 ## Guess Who
 
   * Just like the board game, try to guess the correct "person" by asking yes or no questions.
-  * You can fetch and solve boards in parallel
-  * Scoring:
-    * Unsolved boards cost points (`-log2(size)`)
-    * Solved boards are scored according to how many questions/guesses they took (`size / questions`)
+  * You can only solve one board at a time.
+  * Solved boards are scored according to how many questions/guesses they took (`size / questions`)
 
 ## API
 
 Get a new board for your team. `size` can be ommitted, the default is 24 people.
 To keep things scalable people have `id`s instead of names.
+If your team has an existing unsolved board, this will be returned instead.
 
     GET /boards/[teamname]/new?size=3
     {
