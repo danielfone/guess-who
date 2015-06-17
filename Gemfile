@@ -13,6 +13,7 @@ group :development do
   gem 'quiet_assets'
   gem 'pry-rails'
   gem 'dotenv-rails'
+  gem 'httparty'
 end
 
 group :development, :test do

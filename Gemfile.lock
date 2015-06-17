@@ -76,6 +76,9 @@ GEM
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
     hitimes (1.2.2)
+    httparty (0.13.5)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
     i18n (0.7.0)
     json (1.8.3)
     listen (2.10.0)
@@ -92,6 +95,7 @@ GEM
     mini_portile (0.6.2)
     minitest (5.7.0)
     multi_json (1.11.1)
+    multi_xml (0.5.5)
     nenv (0.2.0)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
@@ -196,6 +200,7 @@ DEPENDENCIES
   guard
   guard-bundler
   guard-rspec
+  httparty
   pg
   pry-rails
   puma
@@ -209,4 +214,4 @@ DEPENDENCIES
   spring-commands-rspec
 
 BUNDLED WITH
-   1.10.3
+   1.10.4

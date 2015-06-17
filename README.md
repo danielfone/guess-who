@@ -3,7 +3,7 @@
   * Just like the board game, try to guess the correct "person" by asking yes or no questions.
   * You can only solve one board at a time.
   * Solved boards are scored according to how many questions/guesses they took (`size / questions`)
-  * If you lose the details for a board, you can delete it per a normal HTTP DELETE.
+  * The population is not persisted on the server, so if you lose the details for a board, you can delete it per a normal HTTP DELETE.
 
 ## API
 
