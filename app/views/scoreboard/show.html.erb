@@ -33,7 +33,7 @@
       <% scores.sort_by { |t,v| -v }.each do |team, score| %>
         <tr>
           <th><%= team %></th>
-          <td><%= score.round %></td>
+          <td style="text-align: right"><%= number_with_delimiter score.round %></td>
         </tr>
       <% end %>
     </tbody>
