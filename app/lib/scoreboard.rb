@@ -21,13 +21,7 @@ class Scoreboard
 private
 
   def calculate_score(round)
-    scoring_scope.where(round: round).find_each.each_with_object(Hash.new(0)) do |p, h|
-      h[p.team] += p.score
-    end
-  end
-
-  def scoring_scope
-    @scoring_scope ||= Board.select(:id, :solved, :size, :guesses, :team)
+    Board.where(solved: true, round: round).group('team').order('sum_size_guesses DESC').sum('size / guesses')
   end
 
 end
