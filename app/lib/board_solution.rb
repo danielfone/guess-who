@@ -13,10 +13,7 @@ private
   def check_answer
     @check_answer ||= begin
       Board.increment_counter :guesses, board_id
-      cache.fetch answer_cache_key do
-        # Don't load potentially huge `population` field
-        Board.select(:answer).find(board_id).answer
-      end
+      cache.fetch(answer_cache_key) { Board.find(board_id).answer }
     end
   end
 
