@@ -21,6 +21,7 @@ class Board < Struct.new(:id, :population)
 
   def self.create(size)
     r = GuessServer.get "/boards/#{TEAM_NAME}/new?size=#{size}"
+    raise r unless r.success?
     new r['id'], r['population']
   end
 
