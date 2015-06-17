@@ -24,6 +24,9 @@ ActiveRecord::Schema.define(version: 20150611111358) do
     t.json    "answer"
     t.integer "guesses",    default: 0,     null: false
     t.boolean "solved",     default: false, null: false
+    t.integer "round"
   end
+
+  add_index "boards", ["round"], name: "index_boards_on_round", using: :btree
 
 end

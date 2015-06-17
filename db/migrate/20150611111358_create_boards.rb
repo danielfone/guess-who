@@ -9,6 +9,7 @@ class CreateBoards < ActiveRecord::Migration
       t.json :answer
       t.integer :guesses, null: false, default: 0
       t.boolean :solved, null: false, default: false
+      t.integer :round, index: true
     end
   end
 end

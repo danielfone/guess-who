@@ -1,7 +1,12 @@
-<h2 class="page-header">Scoreboard</h2>
+<h2 class="page-header">
+  Round
+  <%= Round.current %>
+  …
+  fight!
+</h2>
 <table class="table leaderboard table-bordered" style="width:auto">
   <tbody>
-    <% @scoreboard.scores.each do |team, score| %>
+    <% @scoreboard.sorted_scores.each do |team, score| %>
       <tr>
         <th><%= team %></th>
         <td><%= score.round %></td>
@@ -9,7 +14,15 @@
     <% end %>
   </tbody>
 </table>
-<p>Updating every 30 seconds…</p>
 <script type="text/javascript" charset="utf-8">
-  setTimeout(function(){ location.reload() }, 30000)
+  var refresh = 20
+
+  setInterval(function(){
+    el = document.getElementById('js-refresh-countdown');
+    currentTime = el.innerText;
+    newTime = currentTime - 1;
+    el.innerText = newTime;
+    if (newTime == 0) location.reload();
+  }, 1000)
+  document.write("<p>Updating in <span id='js-refresh-countdown'>"+refresh+"</span> seconds</p>")
 </script>

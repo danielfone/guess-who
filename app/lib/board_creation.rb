@@ -11,6 +11,7 @@ class BoardCreation
 
   def perform
     Board.create! do |p|
+      p.round = Round.current
       p.team = @team
       p.size = @size
       p.answer = generated_population.sample
