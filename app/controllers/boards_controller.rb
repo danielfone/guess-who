@@ -4,7 +4,7 @@ class BoardsController < ApplicationController
     @board = current_board || new_board
     render json: board_json
   rescue Population::SizeError => e
-    render json: e.message, status: :bad_request
+    render json: e.message.to_json, status: :bad_request
   end
 
   def show
@@ -15,13 +15,13 @@ class BoardsController < ApplicationController
   def answer
     head guess_correct? ? :ok : :no_content
   rescue ArgumentError
-    render text: "Invalid answer", status: :bad_request
+    render json: "Invalid answer".to_json, status: :bad_request
   end
 
   def query
     head matches? ? :ok : :no_content
   rescue KeyError => e
-    render text: "Invalid key: #{e.message}", status: :bad_request
+    render json: "Invalid key: #{e.message}".to_json, status: :bad_request
   end
 
   def destroy
