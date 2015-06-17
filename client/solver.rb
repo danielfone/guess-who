@@ -1,4 +1,4 @@
-require './board'
+require_relative './board'
 #
 # This is a reference implementation for solving the board
 # and may be considered a spoiler
