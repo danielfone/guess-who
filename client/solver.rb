@@ -3,14 +3,14 @@ require_relative './board'
 # This is a reference implementation for solving the board
 # and may be considered a spoiler
 #
-# s = Solver.load 100
+# s = Solver.load 'my-team', 100
 # s.solve
 #
 
 class Solver < Struct.new(:board)
 
-  def self.load(size)
-    new Board.create size
+  def self.load(team, size)
+    new Board.create team, size
   end
 
   def solve
@@ -57,6 +57,3 @@ class Solver < Struct.new(:board)
   end
 
 end
-
-require 'pry'
-pry

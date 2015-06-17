@@ -4,7 +4,7 @@ require 'logger'
 #
 # This is a possibly helpful class for interacting with the API
 #
-# board = Board.create 100
+# board = Board.create 'my-team', 100
 # board.population                    => [{"hair" => "brown"...}]
 # board.person_has? 'hair', 'brown'   => true
 # board.is_person? 4                  => false
@@ -17,10 +17,9 @@ class GuessServer
 end
 
 class Board < Struct.new(:id, :population)
-  TEAM_NAME = 'my-team'
 
-  def self.create(size)
-    r = GuessServer.get "/boards/#{TEAM_NAME}/new?size=#{size}"
+  def self.create(team, size)
+    r = GuessServer.get "/boards/#{team}/new?size=#{size}"
     raise r unless r.success?
     new r['id'], r['population']
   end
