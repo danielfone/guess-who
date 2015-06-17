@@ -1,36 +1,24 @@
 require 'httparty'
-require 'logger'
-require 'benchmark'
+
+#
+# This is a possibly helpful class for interacting with the API
+#
+# board = Board.create 100
+# board.population                    => [{"hair" => "brown"...}]
+# board.person_has? 'hair', 'brown'   => true
+# board.is_person? 4                  => false
+#
 
 class Board < Struct.new(:id, :population)
+  HOST = "local.host:3000"
 
-  def self.load(size)
-    r = HTTParty.get "http://local.host:3000/boards/solver/new?size=#{size}"
+  def self.create(size)
+    r = HTTParty.get "http://#{HOST}/boards/solver/new?size=#{size}"
     new r['id'], r['population']
   end
 
-  def solve
-    while population.size > 1
-      ask_best!
-    end
-    guess! or fail "wrong :("
-  end
-
-  def guess!
-    is_person? population.first['id']
-  end
-
-  def ask_best!
-    k,v = best_query
-    if person_has?(k,v)
-      population.select! {|a| a[k] == v }
-    else
-      population.reject! {|a| a[k] == v }
-    end
-  end
-
   def person_has?(k,v)
-    r = HTTParty.get "http://local.host:3000/boards/#{id}/person?#{k}=#{v}"
+    r = HTTParty.get "http://#{HOST}/boards/#{id}/person?#{k}=#{v}"
     case r.code
     when 200
       true
@@ -42,7 +30,7 @@ class Board < Struct.new(:id, :population)
   end
 
   def is_person?(person_id)
-    r = HTTParty.get "http://local.host:3000/boards/#{id}/person/#{person_id}"
+    r = HTTParty.get "http://#{HOST}/boards/#{id}/person/#{person_id}"
     case r.code
     when 200
       true
@@ -50,6 +38,50 @@ class Board < Struct.new(:id, :population)
       false
     else
       raise r
+    end
+  end
+
+  def delete!
+    HTTParty.delete("http://#{HOST}/boards/#{id}")
+  end
+
+end
+
+#
+# This is a reference implementation for solving the board
+# and may be considered a spoiler
+#
+# s = Solver.load 100
+# s.solve
+#
+
+class Solver < Struct.new(:board)
+
+  def self.load(size)
+    new Board.create size
+  end
+
+  def solve
+    while population.size > 1
+      ask_best!
+    end
+    guess! or fail "wrong :("
+  end
+
+  def population
+    board.population
+  end
+
+  def guess!
+    board.is_person? population.first['id']
+  end
+
+  def ask_best!
+    k,v = best_query
+    if board.person_has?(k,v)
+      population.select! {|a| a[k] == v }
+    else
+      population.reject! {|a| a[k] == v }
     end
   end
 
@@ -74,9 +106,5 @@ class Board < Struct.new(:id, :population)
 
 end
 
-#---
-
-#r =
-#pop = Population.new r['population']
 require 'pry'
 pry
