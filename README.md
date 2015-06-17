@@ -68,9 +68,3 @@ Guess the person:
     => 204 Wrong, keep guessing
     => 200 You Won! Grab another board
 
-## TODO:
-
-  * [x] Validations on board creation
-  * [x] Scoreboard
-  * [x] Much faster lookups
-  * [ ] Rounds
