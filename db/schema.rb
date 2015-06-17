@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150611111358) do
+ActiveRecord::Schema.define(version: 20150617222130) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,5 +28,6 @@ ActiveRecord::Schema.define(version: 20150611111358) do
   end
 
   add_index "boards", ["round"], name: "index_boards_on_round", using: :btree
+  add_index "boards", ["team", "solved"], name: "index_boards_on_team_and_solved", using: :btree
 
 end

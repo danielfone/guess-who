@@ -63,7 +63,7 @@ private
   end
 
   def current_board
-    Board.where(team: params[:team], solved: false).first
+    Board.active(params[:team])
   end
 
 end
