@@ -15,6 +15,7 @@ ATTRIBUTES = {
 }
 
 TIMES = Hash.new
+RESPONSE_CODES = Hash.new(0)
 
 def time(type)
   ret = nil
@@ -30,8 +31,12 @@ def random_query
 end
 
 def run_board(logger)
-  size = SIZES.sample
-  b = time("new-#{size}") { HTTParty.get "http://local.host:3000/boards/#{TEAMNAMES.sample}/new?size=#{SIZES.sample}", logger: logger }
+  size = 5000
+  b = time("new-#{size}") {
+    r = HTTParty.get "http://local.host:3000/boards/#{TEAMNAMES.sample}/new?size=#{SIZES.sample}", logger: logger
+    RESPONSE_CODES[r.code] += 1
+    r
+  }
   id = b['id']
   query_board id, size, logger
   id
@@ -44,7 +49,10 @@ def query_board(id, size, logger)
       query: "/boards/#{id}/person?#{random_query}",
       multiquery: "/boards/#{id}/person?#{random_query}&#{random_query}",
     }.each do |type, path|
-      time("#{type}") { HTTParty.get "http://local.host:3000/#{path}", logger: logger }
+      time("#{type}") {
+        r = HTTParty.get "http://local.host:3000/#{path}", logger: logger
+        RESPONSE_CODES[r.code] += 1
+      }
     end
   end
 
@@ -70,3 +78,11 @@ TIMES.each do |type, results|
   puts "#{average.round(3)} s (#{results.size})"
 end
 
+puts "\n---\n"
+RESPONSE_CODES.each do |code, count|
+  printf "%s: %5s", code, count
+  puts
+end
+puts "--------------"
+puts "Total: #{RESPONSE_CODES.values.reduce(:+)}"
+puts
