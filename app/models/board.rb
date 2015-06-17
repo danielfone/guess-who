@@ -4,8 +4,4 @@ class Board < ActiveRecord::Base
     where(team: team, solved: false).first
   end
 
-  def score
-    solved? ? size / guesses : 0
-  end
-
 end

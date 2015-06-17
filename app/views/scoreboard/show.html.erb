@@ -21,7 +21,7 @@
   document.write("<p class='small text-muted'>Updating in <span id='js-refresh-countdown'>"+refresh+"</span> seconds</p>")
 </script>
 
-<% @scoreboard.rounds.to_a.reverse.each do |round,scores| %>
+<% @scoreboard.rounds_with_scores.each do |round,scores| %>
   <table class="table leaderboard table-bordered" style="width:auto;float:left;margin-right:2em">
     <thead>
       <tr>
@@ -30,7 +30,7 @@
       </tr>
     </thead>
     <tbody>
-      <% scores.sort_by { |t,v| -v }.each do |team, score| %>
+      <% scores.each do |team, score| %>
         <tr>
           <th><%= team %></th>
           <td style="text-align: right"><%= number_with_delimiter score.round %></td>
