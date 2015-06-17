@@ -1,18 +1,33 @@
 class Scoreboard
 
-  def sorted_scores
-    scores.sort_by { |k,v| -v }
+  def board_count
+    Board.count
   end
 
-  def scores
-    # Don't load potentially huge `population` field
-    current_boards.select(:id, :solved, :size, :guesses, :team).find_each.each_with_object(Hash.new(0)) do |p, h|
+  def rounds
+    @rounds ||= Board.distinct.pluck(:round).sort.each_with_object(Hash.new) do |round, h|
+      h[round] = if round == Round.current
+        calculate_score(round)
+      else
+        Rails.cache.fetch(['score', round]) { calculate_score round }
+      end
+    end
+  end
+
+  def teams
+    @teams ||= Board.distinct.pluck(:team).sort
+  end
+
+private
+
+  def calculate_score(round)
+    scoring_scope.where(round: round).find_each.each_with_object(Hash.new(0)) do |p, h|
       h[p.team] += p.score
     end
   end
 
-  def current_boards
-    Board.where(round: Round.current)
+  def scoring_scope
+    @scoring_scope ||= Board.select(:id, :solved, :size, :guesses, :team)
   end
 
 end

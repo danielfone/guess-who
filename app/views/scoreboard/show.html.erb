@@ -1,19 +1,13 @@
-<h2 class="page-header">
+<h2 class="page-header" style="margin-top:0">
   Round
   <%= Round.current %>
   …
   fight!
+  <small>
+    <%= pluralize @scoreboard.board_count, "boards" %>
+  </small>
 </h2>
-<table class="table leaderboard table-bordered" style="width:auto">
-  <tbody>
-    <% @scoreboard.sorted_scores.each do |team, score| %>
-      <tr>
-        <th><%= team %></th>
-        <td><%= score.round %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+
 <script type="text/javascript" charset="utf-8">
   var refresh = 20
 
@@ -24,5 +18,24 @@
     el.innerText = newTime;
     if (newTime == 0) location.reload();
   }, 1000)
-  document.write("<p>Updating in <span id='js-refresh-countdown'>"+refresh+"</span> seconds</p>")
+  document.write("<p class='small text-muted'>Updating in <span id='js-refresh-countdown'>"+refresh+"</span> seconds</p>")
 </script>
+
+<% @scoreboard.rounds.to_a.reverse.each do |round,scores| %>
+  <table class="table leaderboard table-bordered" style="width:auto;float:left;margin-right:2em">
+    <thead>
+      <tr>
+        <th></th>
+        <th><%= round %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% scores.sort_by { |t,v| -v }.each do |team, score| %>
+        <tr>
+          <th><%= team %></th>
+          <td><%= score.round %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
