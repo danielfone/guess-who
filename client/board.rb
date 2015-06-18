@@ -10,10 +10,13 @@ require 'logger'
 # board.is_person? 4                  => false
 #
 
+HTTP_LOGGER = Logger.new(STDERR)
+HTTP_LOGGER.formatter = -> (severity, time, progname, msg) { "#{msg}\n" }
+
 class GuessServer
   include HTTParty
   base_uri "local.host:3000"
-  logger ::Logger.new(STDERR)
+  logger HTTP_LOGGER
 end
 
 class Board < Struct.new(:id, :population)
