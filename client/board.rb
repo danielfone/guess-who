@@ -6,7 +6,7 @@ require 'logger'
 #
 # board = Board.create 'my-team', 100
 # board.population                         => [{"hair" => "brown"...}]
-# board.person_has? 'hairstyle', 'brown'   => true
+# board.person_has? 'haircolour', 'brown'  => true
 # board.is_person? 4                       => false
 #
 
