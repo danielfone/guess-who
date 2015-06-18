@@ -14,6 +14,10 @@ class Scoreboard
     end
   end
 
+  def velocity
+    @velocity ||= Board.where(solved: true).where('created_at > ?', 1.minute.ago).group('team').sum('size / guesses')
+  end
+
 private
 
   def scores_for_round(round)

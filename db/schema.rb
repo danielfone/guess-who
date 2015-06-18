@@ -18,15 +18,17 @@ ActiveRecord::Schema.define(version: 20150617222130) do
   enable_extension "uuid-ossp"
 
   create_table "boards", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
-    t.integer "size"
-    t.string  "team"
-    t.json    "answer"
-    t.integer "guesses", default: 0,     null: false
-    t.boolean "solved",  default: false, null: false
-    t.integer "round"
+    t.integer  "size"
+    t.string   "team"
+    t.json     "answer"
+    t.integer  "guesses",    default: 0,     null: false
+    t.boolean  "solved",     default: false, null: false
+    t.integer  "round"
+    t.datetime "created_at"
   end
 
+  add_index "boards", ["created_at", "solved"], name: "index_boards_on_created_at_and_solved", using: :btree
+  add_index "boards", ["round", "solved"], name: "index_boards_on_round_and_solved", using: :btree
   add_index "boards", ["round"], name: "index_boards_on_round", using: :btree
-  add_index "boards", ["team", "solved"], name: "index_boards_on_team_and_solved", using: :btree
 
 end
