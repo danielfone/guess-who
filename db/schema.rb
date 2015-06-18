@@ -27,8 +27,8 @@ ActiveRecord::Schema.define(version: 20150617222130) do
     t.datetime "created_at"
   end
 
-  add_index "boards", ["created_at", "solved"], name: "index_boards_on_created_at_and_solved", using: :btree
-  add_index "boards", ["round", "solved"], name: "index_boards_on_round_and_solved", using: :btree
+  add_index "boards", ["created_at"], name: "index_boards_on_created_at", using: :btree
   add_index "boards", ["round"], name: "index_boards_on_round", using: :btree
+  add_index "boards", ["solved"], name: "index_boards_on_solved", using: :btree
 
 end
