@@ -29,7 +29,7 @@ class Solver < Struct.new(:board)
   end
 
   def ask_best!
-    k,v = best_query
+    k,v = random_question
     if board.person_has?(k,v)
       population.select! {|a| a[k] == v }
     else
@@ -37,23 +37,8 @@ class Solver < Struct.new(:board)
     end
   end
 
-  def best_query
-    _half = half
-    population_distribution.sort_by { |q,count| (count - _half).abs }.first.first
-  end
-
-  def half
-    population.size / 2
-  end
-
-  def attrs
-    @attrs ||= population.first.keys - ["id"]
-  end
-
-  def population_distribution
-    attrs.flat_map do |attr|
-      population.group_by {|a| a[attr] }.map {|v,members| [[attr, v], members.size] }
-    end
+  def random_question
+    population.sample.reject{|k,v| k == "id"}.to_a.sample
   end
 
 end
