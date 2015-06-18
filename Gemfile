@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.1'
 gem 'pg'
 gem "puma"
+gem 'oj'
 
 group :development do
   gem 'spring'

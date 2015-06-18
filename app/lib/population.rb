@@ -31,7 +31,7 @@ class Population
 private
 
   def build_member
-    Population::ATTRIBUTES.each_with_object({}) do |(attr, options), hash|
+    ATTRIBUTES.each_with_object({}) do |(attr, options), hash|
       hash[attr] = options.sample
     end
   end
