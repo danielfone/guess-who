@@ -45,21 +45,11 @@ private
   end
 
   def board_json
-    @board.to_json(only: [:id, :size, :population, :team])
-  end
-
-  def board_creation
-    @board_creation ||= BoardCreation.new params[:team], params[:size]
-  end
-
-  def new_or_current
-    current_board
+    @board.to_json(only: [:id, :size, :team], methods: :population)
   end
 
   def new_board
-    board_creation.perform.tap do |board|
-      board.population = board_creation.generated_population
-    end
+    BoardCreation.perform params[:team], params[:size]
   end
 
   def current_board

@@ -20,10 +20,9 @@ ActiveRecord::Schema.define(version: 20150617222130) do
   create_table "boards", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.integer "size"
     t.string  "team"
-    t.json    "population"
     t.json    "answer"
-    t.integer "guesses",    default: 0,     null: false
-    t.boolean "solved",     default: false, null: false
+    t.integer "guesses", default: 0,     null: false
+    t.boolean "solved",  default: false, null: false
     t.integer "round"
   end
 

@@ -10,16 +10,22 @@ class BoardCreation
   end
 
   def perform
-    Board.create! do |p|
-      p.round = Round.current
-      p.team = @team
-      p.size = @size
-      p.answer = generated_population.sample
+    created_board.tap do |b|
+      b.population = generated_population
     end
   end
 
   def generated_population
     @generated_population ||= @population.build.to_a
+  end
+
+  def created_board
+    @created_board ||= Board.create! do |p|
+      p.round = Round.current
+      p.team = @team
+      p.size = @size
+      p.answer = generated_population.sample
+    end
   end
 
 end

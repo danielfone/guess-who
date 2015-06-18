@@ -15,7 +15,7 @@ ITERATIONS  = Integer(ENV['ITERATIONS'] || 1)
 
 threads = CONCURRENCY.times.map do |i|
   Thread.new do
-    Board.create("team-#{i}", 5000).delete! # Remove left over board
+    Board.create("team-#{i}", 0).delete! # Remove left over board
     ITERATIONS.times do
       time('solve') { Solver.load("team-#{i}", 5000).solve }
     end
