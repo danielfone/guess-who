@@ -45,7 +45,7 @@ private
   end
 
   def board_json
-    @board.to_json(only: [:id, :size, :team], methods: :population)
+    Oj.dump @board.as_json
   end
 
   def new_board

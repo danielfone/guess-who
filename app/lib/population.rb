@@ -3,12 +3,12 @@ class Population
 
   MAX_POPULATION = 5000
   ATTRIBUTES = {
-    sex:         [:xx,       :xy],
-    eyes:        [:blue,     :brown,      :cyclops],
-    glasses:     [:none,     :sunglasses, :xray,     :prescription],
-    hairstyle:   [:mullet,   :bald,       :updo,     :ringlets,      :dynamite],
-    face:        [:eyeliner, :beard,      :rouge,    :sideburns,     :goatee,   :lipstick],
-    haircolour:  [:brown,    :pink,       :orange,   :blonde,        :green,    :black, :grey, :white],
+    'sex' =>          %w[xx       xy],
+    'eyes' =>         %w[blue     brown        cyclops],
+    'glasses' =>      %w[none     sunglasses   xray       prescription],
+    'hairstyle' =>    %w[mullet   bald         updo       ringlets        dynamite],
+    'face' =>         %w[eyeliner beard        rouge      sideburns       goatee     lipstick],
+    'haircolour' =>   %w[brown    pink         orange     blonde          green      black   grey   white],
   }
 
   def initialize(size)
@@ -21,7 +21,7 @@ class Population
 
   def build
     population << build_member until population.size == @size
-    population.each { |p| p[:id] = @current_id += 1 }
+    population.each { |p| p['id'] = @current_id += 1 }
   end
 
   def population

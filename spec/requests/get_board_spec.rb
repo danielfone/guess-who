@@ -13,7 +13,7 @@ RSpec.describe 'GET /boards/[id]' do
     get "/boards/#{board.id}"
     expect(parsed_response).to include "id", "size", "population"
     expect(parsed_response['team']).to eq 'blue'
-    expect(parsed_response['population']).to eq 'foo' => 'bar'
+    expect(parsed_response['population']).to eq nil
   end
 
 end
