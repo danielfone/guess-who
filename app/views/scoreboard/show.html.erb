@@ -9,7 +9,7 @@
 </h2>
 
 <script type="text/javascript" charset="utf-8">
-  var refresh = 20
+  var refresh = 10
 
   setInterval(function(){
     el = document.getElementById('js-refresh-countdown');
@@ -34,6 +34,9 @@
         <tr>
           <th><%= team %></th>
           <td style="text-align: right"><%= number_with_delimiter score.round %></td>
+          <% if round == Round.current %>
+            <td style="text-align: right"><%= number_with_delimiter(@scoreboard.velocity[team] || 0) %> pts/min</td>
+          <% end %>
         </tr>
       <% end %>
     </tbody>
