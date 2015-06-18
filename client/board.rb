@@ -5,9 +5,10 @@ require 'logger'
 # This is a possibly helpful class for interacting with the API
 #
 # board = Board.create 'my-team', 100
-# board.population                         => [{"hair" => "brown"...}]
-# board.person_has? 'haircolour', 'brown'  => true
-# board.is_person? 4                       => false
+# board.population                                      => [{"haircolour" => "brown"...}]
+# board.person_has? haircolour: 'brown'                 => true
+# board.person_has? haircolour: 'brown', eyes: 'blue'   => false
+# board.is_person? 4                                    => false
 #
 
 HTTP_LOGGER = Logger.new(STDERR)
@@ -27,8 +28,9 @@ class Board < Struct.new(:id, :population)
     new r['id'], r['population']
   end
 
-  def person_has?(k,v)
-    r = GuessServer.get "/boards/#{id}/person?#{k}=#{v}"
+  def person_has?(attrs)
+    query = attrs.map { |k,v| "#{k}=#{v}" } * '&'
+    r = GuessServer.get "/boards/#{id}/person?#{query}"
     case r.code
     when 200 then true
     when 204 then false

@@ -29,15 +29,15 @@ class Solver < Struct.new(:board)
   end
 
   def ask_best!
-    k,v = random_question
-    if board.person_has?(k,v)
+    k,v = best_query
+    if board.person_has?(k => v)
       population.select! {|a| a[k] == v }
     else
       population.reject! {|a| a[k] == v }
     end
   end
 
-  def random_question
+  def best_query
     population.sample.reject{|k,v| k == "id"}.to_a.sample
   end
 
